@@ -57,13 +57,6 @@ class MyGame extends Phaser.Scene {
       reapeat: -1,
     });
 
-    this.anims.create({
-      key: 'otherRunning',
-      frames: this.anims.generateFrameNumbers('otherPlayer'),
-      frameRate: 24,
-      reapeat: -1,
-    });
-
     this.input.keyboard.on('keydown', (e) => {
       if (!pressedKeys.includes(e.code)) {
         pressedKeys.push(e.code);
@@ -105,9 +98,9 @@ class MyGame extends Phaser.Scene {
     animateMovement(pressedKeys, player.sprite);
     // Aninamte other player
     if (otherPlayer.moving && !otherPlayer.sprite.anims.isPlaying) {
-      otherPlayer.sprite.play('otherRunning');
+      otherPlayer.sprite.play('running');
     } else if (!otherPlayer.moving && otherPlayer.sprite.anims.isPlaying) {
-      otherPlayer.sprite.stop('otherRunning');
+      otherPlayer.sprite.stop('running');
     }
   }
 }
