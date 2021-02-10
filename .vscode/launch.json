@@ -12,6 +12,14 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/createBoundsFromMask.js"
+        },{
+            "type": "node",
+            "request": "launch",
+            "name": "server",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/server/index.js"
         }
     ]
 }
