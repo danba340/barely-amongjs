@@ -9,6 +9,11 @@ const io = require('socket.io')(http, {
 });
 
 io.on('connection', (socket) => {
+  const room = socket.handshake.query.room;
+  console.log(room);
+  socket.join(room);
+  io.to(room).emit('playerJoined');
+
   console.log('player connected');
 
   socket.on('disconnect', () => {

@@ -13,11 +13,23 @@ import {
 } from './constants';
 import { movePlayer } from './movement';
 import { animateMovement } from './animation';
+import {
+  getQueryParameter,
+  getRandomString,
+  updateQueryParameter,
+} from './utils';
 
 const player = {};
 const otherPlayer = {};
 let socket;
 let pressedKeys = [];
+
+const room = getQueryParameter('room') || getRandomString(5);
+window.history.replaceState(
+  {},
+  document.title,
+  updateQueryParameter('room', room),
+);
 
 class MyGame extends Phaser.Scene {
   constructor() {
@@ -25,7 +37,7 @@ class MyGame extends Phaser.Scene {
   }
 
   preload() {
-    socket = io('localhost:3000');
+    socket = io(`localhost:3000?room=${room}`);
     this.load.image('ship', shipImg);
     this.load.spritesheet('player', playerSprite, {
       frameWidth: PLAYER_SPRITE_WIDTH,
@@ -80,6 +92,9 @@ class MyGame extends Phaser.Scene {
     socket.on('moveEnd', () => {
       console.log('revieved moveend');
       otherPlayer.moving = false;
+    });
+    socket.on('playerJoined', () => {
+      console.log('playerJoined');
     });
   }
 
